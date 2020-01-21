@@ -1,0 +1,84 @@
+Tue Jan 21 15:40:54 2020
+
+
+Moral links:
+
+    Marrying ATP2B4 and NAP1L1
+    Marrying MDK and ATP2B4
+    Marrying MDK and NAP1L1
+    Marrying MDS1 and MDK
+    Marrying MDS1 and ATP2B4
+    Marrying MDS1 and NAP1L1
+
+
+Triangulating prime component with 2 members:
+    ATP2B4, PCCB
+This component is a clique of cost 4
+
+Triangulating prime component with 5 members:
+    NAP1L1, ATP2B4, MDK, MDS1, AML
+This component is a clique of cost 32
+
+
+Total cost of triangulation for all prime components is 36
+
+
+Cliques:
+
+Clique 2, 2 members, table size = 4:
+    ATP2B4, PCCB
+
+Clique 1, 5 members, table size = 32:
+    ATP2B4, NAP1L1, MDK, MDS1, AML
+
+Total clique table size: 36
+
+
+The junction forest:
+
+Creating junction tree with clique 2 as root ...
+
+Cliques 1 and 2 linked, separator has 1 member and table size = 2:
+    ATP2B4
+
+
+Assignment of potentials to cliques:
+
+    Node NAP1L1 assigned to clique 1
+    Node ATP2B4 assigned to clique 2
+    Node PCCB assigned to clique 2
+    Node MDK assigned to clique 1
+    Node MDS1 assigned to clique 1
+    Node AML assigned to clique 1
+
+
+Checking conditional probability potentials:
+
+    No errors found
+
+
+Beliefs for chance nodes:
+
+    NAP1L1:
+	no         0.789474
+	yes        0.210526
+
+    ATP2B4:
+	no         0.77193
+	yes        0.22807
+
+    PCCB:
+	yes        0.824561
+	no         0.175439
+
+    MDK:
+	no         0.754386
+	yes        0.245614
+
+    MDS1:
+	yes        0.77193
+	no         0.22807
+
+    AML:
+	yes        0.290757
+	no         0.709243
