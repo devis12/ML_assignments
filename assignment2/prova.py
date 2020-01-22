@@ -2,6 +2,7 @@ import numpy as np
 import sklearn
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import HashingVectorizer
+import matplotlib.pyplot as plt
 
 l1 = np.array(["Ciao bello come stai", "bello come giornata", "Napoleone ha conquistato una giornata"])
 
@@ -12,7 +13,6 @@ l1_h = (hv.fit_transform(l1)).toarray()
 
 print(l1_t)
 print(l1_t.shape)
-print(cv.vocabulary_)
 
 print(l1_h)
 print(l1_h.shape)
@@ -26,3 +26,9 @@ print(l2_t.shape)
 
 print(l2_h)
 print(l2_h.shape)
+
+x = np.linspace(-10, 10, 200)    # get a sample of the x axis
+y = np.exp(-(x**2)/(2*1))        # compute the function for all points in the sample
+plt.plot(x, y)                   # add the curve to the plot
+plt.ylim(-0.05,1.05)             # set bottom and top limits for y axis
+plt.show()                       # show the plot

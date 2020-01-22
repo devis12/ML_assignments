@@ -2,14 +2,53 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-
+import time
 import sklearn
 from sklearn.svm import SVC
+from sklearn.model_selection import GridSearchCV
 from sklearn import metrics
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import HashingVectorizer
 from sklearn.model_selection import KFold, cross_val_score
 from sklearn.model_selection import learning_curve
+
+def load_data(n_feat, filename_train_data, filename_train_targets, filename_test_data, filename_test_targets):
+
+    #loading training data
+    raw_train_data = (pd.read_csv(filename_train_data, header=None)).to_numpy()
+    raw_train_targets = (pd.read_csv(filename_train_targets, header=None)).to_numpy()
+
+    if(raw_train_data.shape[0] != raw_train_targets.shape[0]):
+        print("ERROR!\nTraining samples not valid!")
+        exit
+
+
+    #raw_train_data = substituteEmptyTweetText(raw_train_data)
+    #process training data
+    # learn new vocabulary from the training data & fit all the tweets into an occurencies matrix
+    train_data = getRetweetFavs(raw_train_data)
+    train_data = std_matrix_by_feature(train_data)
+
+
+    #just transform DT to 1 and HC to 0
+    train_targets = process_label(raw_train_targets)
+
+    #loading testing data
+    raw_test_data = np.array((pd.read_csv(filename_test_data, header=None)).values)
+    raw_test_targets = np.array((pd.read_csv(filename_test_targets, header=None)).values)
+
+    if(raw_test_data.shape[0] != raw_test_targets.shape[0]):
+        print("ERROR!\nTesting samples not valid!")
+        exit
+
+    #process testing data (same processing as for the training data... just applied to the testing data)
+    #raw_test_data = substituteEmptyTweetText(raw_test_data)
+    #test_data = (vectorizer.transform(raw_test_data[:,0])).toarray()
+    test_data = getRetweetFavs(raw_test_data)
+    test_data = std_matrix_by_feature(test_data)
+    test_targets = process_label(raw_test_targets)
+
+    return train_data, train_targets, test_data, test_targets
 
 #convert "DT" to class 1 (true) and everything else to class 0
 def process_label(output_data):
@@ -30,69 +69,78 @@ def unprocess_label(output_data):
             res.append("HC")
     return res
 
+def substituteEmptyTweetText(raw_data):
+    for i in range(0,len(raw_data)):
+        if(not type(raw_data[i][0]) is str):
+            raw_data[i][0] = "a"
+    
+    return raw_data
+
+def getRetweetFavs(raw_data):
+    retweets = []
+    for rtw in raw_data[:,2]:
+        if(np.isnan(rtw)):
+            retweets.append([0])
+        else:
+            retweets.append([int(rtw)])
+
+    favs = []
+    for fav in raw_data[:,3]:
+        if(np.isnan(fav)):
+            favs.append([0])
+        else:
+            favs.append([int(fav)])
+
+    retweets = np.array(retweets)
+    favs = np.array(favs)
+
+    result = np.append(retweets, favs, axis=1)
+    return result
+
 def std_matrix_by_feature(data):
     for i in range(0,data.shape[1]):
         data[:,i] = (data[:,i] - data[:,i].mean())/data[:,i].std()
     return data
 
 #object in sklearn useful to vectorize an array of strings into a matrix of occurencies for the words within the given strings
-#vectorizer = CountVectorizer()
-vectorizer = HashingVectorizer(n_features=2**9)
-
-#loading training data
-raw_train_data = (pd.read_csv("tweets-train-data.csv", header=None)).to_numpy()
-raw_train_targets = (pd.read_csv("tweets-train-targets.csv", header=None)).to_numpy()
-#print("# of examples in raw training data = ", len(raw_train_data))
-#print("# of examples in raw training labels = ", len(raw_train_targets))
-
-if(raw_train_data.shape[0] != raw_train_targets.shape[0]):
-    print("ERROR!\nTraining samples not valid!")
-    exit
-
-#process training data
-# learn new vocabulary from the training data & fit all the tweets into an occurencies matrix
-train_data = (vectorizer.fit_transform(raw_train_data[:,0])).toarray() 
-train_data = std_matrix_by_feature(train_data)
-#just transform DT to 1 and HC to 0
-train_targets = process_label(raw_train_targets)
-#print("# of examples in processed training data = ", len(train_data))
-#print("# of examples in processed training labels = ", len(train_targets))
-
-#loading testing data
-raw_test_data = np.array((pd.read_csv("tweets-test-data.csv", header=None)).values)
-raw_test_targets = np.array((pd.read_csv("tweets-test-targets.csv", header=None)).values)
-#print("# of examples in raw testing data = ", len(raw_test_data))
-#print("# of examples in raw testing labels = ", len(raw_test_targets))
-
-if(raw_test_data.shape[0] != raw_test_targets.shape[0]):
-    print("ERROR!\nTesting samples not valid!")
-    exit
-
-#process testing data (same processing as for the training data... just applied to the testing data)
-test_data = (vectorizer.transform(raw_test_data[:,0])).toarray() 
-test_data = std_matrix_by_feature(test_data)
-test_targets = process_label(raw_test_targets)
-#print("# of examples in processed testing data = ", len(test_data))
-#print("# of examples in processed testing labels = ", len(test_targets))
-
-#print(train_data.shape)
-#print(test_data.shape)
-
-
-kf = KFold(n_splits=3, shuffle=True, random_state=42)
-
-gamma_values = [0.1, 0.02, 0.001]
+n_features_possibilities = [2**6, 2**7, 2**8]
 
 accuracy_scores = []
 precision_scores = []
 recall_scores = []
 f1_scores = []
 
-# Do model selection over all the possible values of gamma 
-for gamma in gamma_values:
+#best_selected_params
+best_params = {
+    'C': 10,
+    'gamma': 0.01,
+    'n_features': 2**8
+}
+
+best_accuracy = 0
+
+kf = KFold(n_splits=3, shuffle=True, random_state=42)
+
+"""
+# Do model selection over all the possible values of n_features_possibilities 
+for n_feat in n_features_possibilities:
+    print("\nK-FOLD\nn_features for HashingVectorizer = ", n_feat)
+    train_data, train_targets, test_data, test_targets = load_data(n_feat,"tweets-train-data.csv","tweets-train-targets.csv","tweets-test-data.csv","tweets-test-targets.csv")
+    
+    possible_parameters = {
+        'C': [1e0, 1e1, 1e2, 1e3],
+        'gamma': [1e-1, 1e-2, 1e-3]
+    }
+
+    svc = SVC(kernel='rbf')
+    clf = GridSearchCV(svc, possible_parameters, n_jobs=4, cv=3) # n_jobs=4 means we parallelize the search over 4 threads
+    clf.fit(train_data, train_targets)
+    
+    best_C = clf.best_params_['C']
+    best_gamma = clf.best_params_['gamma']
     
     # Train a classifier with current gamma
-    clf = SVC(C=10, kernel='rbf', gamma=gamma)
+    clf = SVC(C=best_C, kernel='rbf', gamma=best_gamma)
 
     # Compute cross-validated accuracy scores
     acc_scores = cross_val_score(clf, train_data, train_targets, cv=kf.split(train_data), scoring='accuracy')
@@ -118,22 +166,30 @@ for gamma in gamma_values:
     f1_score = f1_scores_temp.mean()
     f1_scores.append(f1_score)
 
-    print("Results for k-fold validation with gamma = ", gamma)
+    print(("Results for n_features = {0} K-FOLD cross validation (using C = {1}, gamma = {2})".format(n_feat, best_C, best_gamma)))
     print("Accuracy = ", accuracy_score)
     print("Precision = ", precision_score)
     print("Recall = ", recall_score)
     print("F1 = ", f1_score)
+
+    if(accuracy_score > best_accuracy):
+        best_accuracy = accuracy_score
+        best_params['C'] = best_C
+        best_params['gamma'] = best_gamma
+        best_params['n_features'] = n_feat
+"""
     
 # Get the gamma with highest mean accuracy
-best_index = np.array(accuracy_scores).argmax()
-best_gamma = gamma_values[best_index]    
 
-print("Selecting gamma = ", best_gamma)
+print(("\n\nAt the end of k-fold training, we select as n_features = {0} (C={1}, gamma={2})").format(best_params['n_features'], best_params['C'], best_params['gamma']))
+train_data, train_targets, test_data, test_targets = load_data(best_params['n_features'],"/home/devis/Documents/ML_assignments/assignment2/modified_dataset/tweets-train-data.csv","/home/devis/Documents/ML_assignments/assignment2/modified_dataset/tweets-train-targets.csv","/home/devis/Documents/ML_assignments/assignment2/modified_dataset/tweets-test-data.csv","/home/devis/Documents/ML_assignments/assignment2/modified_dataset/tweets-test-targets.csv")
+    
+#best_gamma = 0.02
 # Specify the parameters in the constructor.
 # C is the parameter of the primal problem of the SVM;
 # The rbf kernel is the Gaussian kernel;
 # The rbf kernel takes one parameter: gamma (gaussian width)
-clf = SVC(C=1000, kernel='rbf', gamma=best_gamma)
+clf = SVC(C=best_params['C'], kernel='rbf', gamma=best_params['gamma'])
 
 # Training
 clf.fit(train_data, train_targets)
@@ -155,7 +211,7 @@ plt.ylabel("Score")
 plt.grid()
 
 # The function automatuically executes a Kfold cross validation for each dataset size
-train_sizes, train_scores, val_scores = learning_curve(clf, train_data, train_targets, scoring='accuracy', cv=3)
+train_sizes, train_scores, val_scores = learning_curve(clf, train_data, train_targets, scoring='accuracy', cv=kf.split(train_data))
 
 # Get the mean and std of train and validation scores over the cv folds along the varying dataset sizes
 train_scores_mean = np.mean(train_scores, axis=1)
