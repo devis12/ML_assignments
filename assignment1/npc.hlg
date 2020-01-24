@@ -1,4 +1,4 @@
-Tue Jan 21 15:40:54 2020
+Fri Jan 24 22:37:00 2020
 
 
 Moral links:
@@ -60,25 +60,25 @@ Checking conditional probability potentials:
 Beliefs for chance nodes:
 
     NAP1L1:
-	no         0.789474
-	yes        0.210526
+	no         0.784483
+	yes        0.215517
 
     ATP2B4:
-	no         0.77193
-	yes        0.22807
+	no         0.761437
+	yes        0.238563
 
     PCCB:
-	yes        0.824561
-	no         0.175439
+	yes        0.818966
+	no         0.181034
 
     MDK:
-	no         0.754386
-	yes        0.245614
+	no         0.75
+	yes        0.25
 
     MDS1:
-	yes        0.77193
-	no         0.22807
+	yes        0.767241
+	no         0.232759
 
     AML:
-	yes        0.290757
-	no         0.709243
+	yes        0.364586
+	no         0.635414

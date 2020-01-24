@@ -102,7 +102,7 @@ def std_matrix_by_feature(data):
         data[:,i] = (data[:,i] - data[:,i].mean())/data[:,i].std()
     return data
 
-n_features_possibilities = [2**6, 2**7, 2**8, 2**9]
+n_features_possibilities = [2**6, 2**7, 2**8]
 
 accuracy_scores = []
 precision_scores = []

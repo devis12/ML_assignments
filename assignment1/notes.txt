@@ -1,0 +1,7 @@
+#NPC
+- selected arch which directly goes from PCB to AML, because it has shown an improvement in the error rate
+- modifying n of iterations and conv threshold has shown no improvement
+-40% err rate
+-default level of significance
+
+

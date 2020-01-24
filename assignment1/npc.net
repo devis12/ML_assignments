@@ -58,7 +58,7 @@ net
 
 node NAP1L1
 {
-    position = (50 210);
+    position = (421 273);
     states = ("no" "yes");
     HR_LinkGroup = "[AML:0][ATP2B4:0][PCCB:0][MDK:0][MDS1:0]";
     HR_LinkMode = "[AML:0][ATP2B4:0][PCCB:0][MDK:0][MDS1:0]";
@@ -66,7 +66,7 @@ node NAP1L1
 
 node ATP2B4
 {
-    position = (210 190);
+    position = (538 260);
     states = ("no" "yes");
     HR_LinkGroup = "[AML:0][PCCB:0][MDK:0][MDS1:0]";
     HR_LinkMode = "[AML:0][PCCB:0][MDK:0][MDS1:0]";
@@ -74,7 +74,7 @@ node ATP2B4
 
 node PCCB
 {
-    position = (90 130);
+    position = (387 200);
     states = ("yes" "no");
     HR_LinkGroup = "[ATP2B4:0][AML:0][MDS1:0][MDK:0]";
     HR_LinkMode = "[ATP2B4:0][AML:0][MDS1:0][MDK:0]";
@@ -82,7 +82,7 @@ node PCCB
 
 node MDK
 {
-    position = (250 110);
+    position = (623 171);
     states = ("no" "yes");
     HR_LinkGroup = "[AML:0][MDS1:0]";
     HR_LinkMode = "[AML:0][MDS1:0]";
@@ -90,7 +90,7 @@ node MDK
 
 node MDS1
 {
-    position = (50 50);
+    position = (380 127);
     states = ("yes" "no");
     HR_LinkGroup = "[AML:0]";
     HR_LinkMode = "[AML:0]";
@@ -98,78 +98,78 @@ node MDS1
 
 node AML
 {
-    position = (210 30);
+    position = (538 100);
     states = ("yes" "no");
 }
 
 potential (NAP1L1)
 {
-    data = ( 0.789474 0.210526 );
-    experience = 57;
+    data = ( 0.784483 0.215517 );
+    experience = 58;
 }
 
 potential (ATP2B4 | PCCB)
 {
     data
-     = (( 0.723404 0.276596 )	%  PCCB=yes
-	( 1 0 ));	%  PCCB=no
+     = (( 0.71875 0.28125 )	%  PCCB=yes
+	( 0.954545 0.0454545 ));	%  PCCB=no
     experience
-     = ( 47	%  PCCB=yes
-	 10 );	%  PCCB=no
+     = ( 48	%  PCCB=yes
+	 11 );	%  PCCB=no
 }
 
 potential (PCCB)
 {
-    data = ( 0.824561 0.175439 );
-    experience = 57;
+    data = ( 0.818966 0.181034 );
+    experience = 58;
 }
 
 potential (MDK)
 {
-    data = ( 0.754386 0.245614 );
-    experience = 57;
+    data = ( 0.75 0.25 );
+    experience = 58;
 }
 
 potential (MDS1)
 {
-    data = ( 0.77193 0.22807 );
-    experience = 57;
+    data = ( 0.767241 0.232759 );
+    experience = 58;
 }
 
 potential (AML | MDS1 MDK ATP2B4 NAP1L1)
 {
     data
-     = ((((( 0.730769 0.269231 )	%  MDS1=yes  MDK=no  ATP2B4=no  NAP1L1=no
-	   ( 0 1 ))	%  MDS1=yes  MDK=no  ATP2B4=no  NAP1L1=yes
-	  (( 0.2 0.8 )	%  MDS1=yes  MDK=no  ATP2B4=yes  NAP1L1=no
-	   ( 0 1 )))	%  MDS1=yes  MDK=no  ATP2B4=yes  NAP1L1=yes
-	 ((( 0 1 )	%  MDS1=yes  MDK=yes  ATP2B4=no  NAP1L1=no
-	   ( 0 1 ))	%  MDS1=yes  MDK=yes  ATP2B4=no  NAP1L1=yes
-	  (( 0 1 )	%  MDS1=yes  MDK=yes  ATP2B4=yes  NAP1L1=no
+     = ((((( 0.722222 0.277778 )	%  MDS1=yes  MDK=no  ATP2B4=no  NAP1L1=no
+	   ( 0.125 0.875 ))	%  MDS1=yes  MDK=no  ATP2B4=no  NAP1L1=yes
+	  (( 0.25 0.75 )	%  MDS1=yes  MDK=no  ATP2B4=yes  NAP1L1=no
+	   ( 0.25 0.75 )))	%  MDS1=yes  MDK=no  ATP2B4=yes  NAP1L1=yes
+	 ((( 0.1 0.9 )	%  MDS1=yes  MDK=yes  ATP2B4=no  NAP1L1=no
+	   ( 0.125 0.875 ))	%  MDS1=yes  MDK=yes  ATP2B4=no  NAP1L1=yes
+	  (( 0.166667 0.833333 )	%  MDS1=yes  MDK=yes  ATP2B4=yes  NAP1L1=no
 	   ( 0.5 0.5 ))))	%  MDS1=yes  MDK=yes  ATP2B4=yes  NAP1L1=yes
-	(((( 0 1 )	%  MDS1=no  MDK=no  ATP2B4=no  NAP1L1=no
-	   ( 0 1 ))	%  MDS1=no  MDK=no  ATP2B4=no  NAP1L1=yes
-	  (( 0 1 )	%  MDS1=no  MDK=no  ATP2B4=yes  NAP1L1=no
-	   ( 0 1 )))	%  MDS1=no  MDK=no  ATP2B4=yes  NAP1L1=yes
-	 ((( 0 1 )	%  MDS1=no  MDK=yes  ATP2B4=no  NAP1L1=no
+	(((( 0.166667 0.833333 )	%  MDS1=no  MDK=no  ATP2B4=no  NAP1L1=no
+	   ( 0.166667 0.833333 ))	%  MDS1=no  MDK=no  ATP2B4=no  NAP1L1=yes
+	  (( 0.25 0.75 )	%  MDS1=no  MDK=no  ATP2B4=yes  NAP1L1=no
+	   ( 0.125 0.875 )))	%  MDS1=no  MDK=no  ATP2B4=yes  NAP1L1=yes
+	 ((( 0.1 0.9 )	%  MDS1=no  MDK=yes  ATP2B4=no  NAP1L1=no
 	   ( 0.5 0.5 ))	%  MDS1=no  MDK=yes  ATP2B4=no  NAP1L1=yes
-	  (( 0 1 )	%  MDS1=no  MDK=yes  ATP2B4=yes  NAP1L1=no
+	  (( 0.25 0.75 )	%  MDS1=no  MDK=yes  ATP2B4=yes  NAP1L1=no
 	   ( 0.5 0.5 )))));	%  MDS1=no  MDK=yes  ATP2B4=yes  NAP1L1=yes
     experience
-     = (((( 26	%  MDS1=yes  MDK=no  ATP2B4=no  NAP1L1=no
-	    3 )	%  MDS1=yes  MDK=no  ATP2B4=no  NAP1L1=yes
-	  ( 5	%  MDS1=yes  MDK=no  ATP2B4=yes  NAP1L1=no
-	    1 ))	%  MDS1=yes  MDK=no  ATP2B4=yes  NAP1L1=yes
-	 (( 4	%  MDS1=yes  MDK=yes  ATP2B4=no  NAP1L1=no
-	    3 )	%  MDS1=yes  MDK=yes  ATP2B4=no  NAP1L1=yes
-	  ( 2	%  MDS1=yes  MDK=yes  ATP2B4=yes  NAP1L1=no
-	    0 )))	%  MDS1=yes  MDK=yes  ATP2B4=yes  NAP1L1=yes
-	((( 2	%  MDS1=no  MDK=no  ATP2B4=no  NAP1L1=no
-	    2 )	%  MDS1=no  MDK=no  ATP2B4=no  NAP1L1=yes
-	  ( 1	%  MDS1=no  MDK=no  ATP2B4=yes  NAP1L1=no
-	    3 ))	%  MDS1=no  MDK=no  ATP2B4=yes  NAP1L1=yes
-	 (( 4	%  MDS1=no  MDK=yes  ATP2B4=no  NAP1L1=no
-	    0 )	%  MDS1=no  MDK=yes  ATP2B4=no  NAP1L1=yes
-	  ( 1	%  MDS1=no  MDK=yes  ATP2B4=yes  NAP1L1=no
-	    0 ))));	%  MDS1=no  MDK=yes  ATP2B4=yes  NAP1L1=yes
+     = (((( 27	%  MDS1=yes  MDK=no  ATP2B4=no  NAP1L1=no
+	    4 )	%  MDS1=yes  MDK=no  ATP2B4=no  NAP1L1=yes
+	  ( 6	%  MDS1=yes  MDK=no  ATP2B4=yes  NAP1L1=no
+	    2 ))	%  MDS1=yes  MDK=no  ATP2B4=yes  NAP1L1=yes
+	 (( 5	%  MDS1=yes  MDK=yes  ATP2B4=no  NAP1L1=no
+	    4 )	%  MDS1=yes  MDK=yes  ATP2B4=no  NAP1L1=yes
+	  ( 3	%  MDS1=yes  MDK=yes  ATP2B4=yes  NAP1L1=no
+	    1 )))	%  MDS1=yes  MDK=yes  ATP2B4=yes  NAP1L1=yes
+	((( 3	%  MDS1=no  MDK=no  ATP2B4=no  NAP1L1=no
+	    3 )	%  MDS1=no  MDK=no  ATP2B4=no  NAP1L1=yes
+	  ( 2	%  MDS1=no  MDK=no  ATP2B4=yes  NAP1L1=no
+	    4 ))	%  MDS1=no  MDK=no  ATP2B4=yes  NAP1L1=yes
+	 (( 5	%  MDS1=no  MDK=yes  ATP2B4=no  NAP1L1=no
+	    1 )	%  MDS1=no  MDK=yes  ATP2B4=no  NAP1L1=yes
+	  ( 2	%  MDS1=no  MDK=yes  ATP2B4=yes  NAP1L1=no
+	    1 ))));	%  MDS1=no  MDK=yes  ATP2B4=yes  NAP1L1=yes
 }

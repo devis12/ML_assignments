@@ -1,0 +1,156 @@
+net
+{
+    node_size = (80 40);
+    HR_realname_AML = "AML";
+    HR_realname_MDS1 = "MDS1";
+    HR_realname_MDK = "MDK";
+    HR_realname_PCCB = "PCCB";
+    HR_realname_ATP2B4 = "ATP2B4";
+    HR_realname_NAP1L1 = "NAP1L1";
+    HR_Has_Constraints = "yes";
+    HR_DBN_Num_Slices = "5";
+    HR_Desc = "";
+    HR_OOBN_CheckConsistency = "1";
+    HR_OOBN_FitExpand = "1";
+    HR_Zoom_ZoomFactor = "100";
+    HR_Groups_GroupColors = "";
+    HR_Groups_GroupNames = "";
+    HR_Groups_UserGroupsNo = "0";
+    HR_Utility_Link = "63";
+    HR_Probabilistic_Link = "63";
+    HR_Functional_Link = "63";
+    HR_Binding_Link = "63";
+    HR_Information_Arc = "63";
+    HR_Color_Interface = "21";
+    HR_Color_Instance = "0";
+    HR_Color_DiscreteFunction = "5";
+    HR_Color_Function = "4";
+    HR_Color_Utility = "36";
+    HR_Color_Decision = "17";
+    HR_Color_ContinuousChance = "48";
+    HR_Color_DiscreteChance = "16";
+    HR_Monitor_InitSD = "2";
+    HR_Monitor_Utility_Arrange = "0";
+    HR_Monitor_Mean_Variance = "1";
+    HR_Monitor_Chance_Utility = "1";
+    HR_Monitor_InitStates = "5";
+    HR_Monitor_OpenGraph = "0";
+    HR_Monitor_GraphPrecision = "100";
+    HR_Monitor_AutoUpdGraph = "0";
+    HR_Compile_MaxMinimalSeparators = "100000";
+    HR_Compile_ApproxEpsilon = "1.0E-5";
+    HR_Compile_Approximate = "0";
+    HR_Compile_SaveToMemory = "0";
+    HR_Compile_Compress = "0";
+    HR_Compile_TriangMethod = "0";
+    HR_Propagate_AutoNormal = "1";
+    HR_Propagate_AutoSum = "1";
+    HR_Propagate_Auto = "1";
+    HR_Font_Italic = "0";
+    HR_Font_Weight = "400";
+    HR_Font_Size = "-12";
+    HR_Font_Name = "javax.swing.plaf.FontUIResource[family=Dialog,name=Dialog,style=bold,size=12]";
+    HR_Grid_GridShow = "0";
+    HR_Grid_GridSnap = "0";
+    HR_Grid_Y = "40";
+    HR_Grid_X = "40";
+}
+
+node NAP1L1
+{
+    position = (829 278);
+    states = ("no" "yes");
+}
+
+node ATP2B4
+{
+    position = (932 394);
+    states = ("no" "yes");
+}
+
+node PCCB
+{
+    position = (720 389);
+    states = ("yes" "no");
+}
+
+node MDK
+{
+    position = (904 323);
+    states = ("no" "yes");
+}
+
+node MDS1
+{
+    position = (760 326);
+    states = ("yes" "no");
+}
+
+node AML
+{
+    position = (829 483);
+    states = ("yes" "no");
+    HR_Constraint_MDK = "Arrow";
+    HR_Constraint_ATP2B4 = "Arrow";
+    HR_Constraint_NAP1L1 = "Arrow";
+    HR_Constraint_PCCB = "Arrow";
+    HR_Constraint_MDS1 = "Arrow";
+    HR_LinkGroup = "[MDS1:0][PCCB:0][NAP1L1:0][ATP2B4:0][MDK:0]";
+    HR_LinkMode = "[MDS1:0][PCCB:0][NAP1L1:0][ATP2B4:0][MDK:0]";
+}
+
+potential (NAP1L1 | AML)
+{
+    data
+     = (( 0.954545 0.0454545 )	%  AML=yes
+	( 0.666667 0.333333 ));	%  AML=no
+    experience
+     = ( 22	%  AML=yes
+	 39 );	%  AML=no
+}
+
+potential (ATP2B4 | AML)
+{
+    data
+     = (( 0.909091 0.0909091 )	%  AML=yes
+	( 0.666667 0.333333 ));	%  AML=no
+    experience
+     = ( 22	%  AML=yes
+	 39 );	%  AML=no
+}
+
+potential (PCCB | AML)
+{
+    data
+     = (( 0.954545 0.0454545 )	%  AML=yes
+	( 0.717949 0.282051 ));	%  AML=no
+    experience
+     = ( 22	%  AML=yes
+	 39 );	%  AML=no
+}
+
+potential (MDK | AML)
+{
+    data
+     = (( 0.954545 0.0454545 )	%  AML=yes
+	( 0.615385 0.384615 ));	%  AML=no
+    experience
+     = ( 22	%  AML=yes
+	 39 );	%  AML=no
+}
+
+potential (MDS1 | AML)
+{
+    data
+     = (( 0.954545 0.0454545 )	%  AML=yes
+	( 0.641026 0.358974 ));	%  AML=no
+    experience
+     = ( 22	%  AML=yes
+	 39 );	%  AML=no
+}
+
+potential (AML)
+{
+    data = ( 0.355932 0.644068 );
+    experience = 59;
+}

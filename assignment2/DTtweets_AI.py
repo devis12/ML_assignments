@@ -13,8 +13,8 @@ from sklearn.model_selection import KFold, cross_val_score
 from sklearn.model_selection import learning_curve
 
 def load_data(n_feat, filename_train_data, filename_train_targets, filename_test_data, filename_test_targets):
-
-    vectorizer = HashingVectorizer(n_features=n_feat)
+    vectorizer = CountVectorizer()
+    #vectorizer = HashingVectorizer(n_features=n_feat)
 
     #loading training data
     raw_train_data = (pd.read_csv(filename_train_data, header=None)).to_numpy()
@@ -27,7 +27,7 @@ def load_data(n_feat, filename_train_data, filename_train_targets, filename_test
     #process training data
     # learn new vocabulary from the training data & fit all the tweets into an occurencies matrix
     train_data = (vectorizer.fit_transform(raw_train_data[:,0])).toarray() 
-    train_data = std_matrix_by_feature(train_data)
+    #train_data = std_matrix_by_feature(train_data)
 
 
     #just transform DT to 1 and HC to 0
@@ -43,7 +43,7 @@ def load_data(n_feat, filename_train_data, filename_train_targets, filename_test
 
     #process testing data (same processing as for the training data... just applied to the testing data)
     test_data = (vectorizer.transform(raw_test_data[:,0])).toarray()
-    test_data = std_matrix_by_feature(test_data)
+    #test_data = std_matrix_by_feature(test_data)
     test_targets = process_label(raw_test_targets)
 
     return train_data, train_targets, test_data, test_targets
@@ -79,9 +79,9 @@ kf = KFold(n_splits=3, shuffle=True, random_state=42)
 
 #best_selected_params
 best_params = {
-    'C': None,
-    'gamma': None,
-    'n_features': None
+    'C': 1e1,
+    'gamma': 1e-2,
+    'n_features':  2**8
 }
 
 best_accuracy = 0
@@ -91,6 +91,7 @@ precision_scores = []
 recall_scores = []
 f1_scores = []
 
+"""
 # Do model selection over all the possible values of gamma 
 for n_feat in n_features_possibilities:
     
@@ -150,7 +151,7 @@ for n_feat in n_features_possibilities:
         best_params['gamma'] = best_gamma
         best_params['n_features'] = n_feat    
     
-
+"""
 print(("\n\nAt the end of k-fold training, we select as n_features = {0} (C={1}, gamma={2})").format(best_params['n_features'], best_params['C'], best_params['gamma']))
 train_data, train_targets, test_data, test_targets = load_data(best_params['n_features'],"tweets-train-data.csv","tweets-train-targets.csv","tweets-test-data.csv","tweets-test-targets.csv")
     
