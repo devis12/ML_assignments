@@ -84,16 +84,18 @@ we'll get predictions using again a softmax layer
 class OcrDeepModel(Model):
   def __init__(self):
     super().__init__()                            # input shape: (batch, 16, 8, 1)
-    self.conv1 = OcrConvolutional(1, 32, 5)       # out shape : (batch, 16, 8, 32)
+    self.conv1 = OcrConvolutional(1, 16, 5)       # out shape : (batch, 16, 8, 32)
     self.pool1 = MaxPool2D([2,2])                 # out shape : (batch, 8,  4, 32)
-    self.conv2 = OcrConvolutional(32, 64, 5)      # out shape : (batch, 8,  4, 64)
+    self.conv2 = OcrConvolutional(16, 32, 5)      # out shape : (batch, 8,  4, 64)
     self.pool2 = MaxPool2D([2,1])                 # out shape : (batch, 4,  4, 64)
-    self.conv3 = OcrConvolutional(64, 128, 3)      # out shape : (batch, 4,  4, 128)
-    self.pool3 = MaxPool2D([2,2])                 # out shape : (batch, 2,  2, 128)
-    self.flatten = Flatten()                      # out shape : (batch, 2*2*128)
-    self.fc1 = OcrFullyConnected(2*2*128, 1024)    # out shape : (batch, 1024)
+    self.conv3 = OcrConvolutional(32, 64, 3)      # out shape : (batch, 4,  4, 64)
+    self.pool3 = MaxPool2D([2,2])                 # out shape : (batch, 2,  2, 64)
+    #self.conv4 = OcrConvolutional(64, 128, 2)     # out shape : (batch, 2,  2, 128)
+    #self.pool4 = MaxPool2D([2,2])                 # out shape : (batch, 1,  1, 128)
+    self.flatten = Flatten()                      # out shape : (batch, 1*1*128)
+    self.fc1 = OcrFullyConnected(2*2*64, 512)    # out shape : (batch, 512)
     self.dropout = Dropout(0.5)                   # out shape : unchanged
-    self.fc2 = OcrFullyConnected(1024, 26)         # out shape : (batch, 26)
+    self.fc2 = OcrFullyConnected(512, 26)         # out shape : (batch, 26)
     self.softmax = Softmax()                      # out shape : unchanged
 
 
@@ -104,6 +106,8 @@ class OcrDeepModel(Model):
     x = self.pool2(x)
     x = tf.nn.relu(self.conv3(x))
     x = self.pool3(x)
+    #x = tf.nn.relu(self.conv4(x))
+    #x = self.pool4(x)
 
     x = self.flatten(x)
     x = tf.nn.relu(self.fc1(x))
@@ -192,12 +196,12 @@ test_target = (pd.read_csv('test-target.csv', header=None)).to_numpy()
 
 #pre-process Xs (fit every letter from a 128 flat array to a 16x8 matrix, convert to tensor shapes and add a third dimension)
 train_data = train_data.reshape(train_data.shape[0], 16, 8)
-train_data = tf.cast(train_data, tf.float32) 
+train_data = tf.cast(train_data, tf.float32) / 255.0
 #train_data = tf.convert_to_tensor(train_data)
 train_data = train_data[..., tf.newaxis]
 
 test_data = test_data.reshape(test_data.shape[0], 16, 8)
-test_data = tf.cast(test_data, tf.float32) 
+test_data = tf.cast(test_data, tf.float32) / 255.0
 #test_data = tf.convert_to_tensor(test_data)
 test_data = test_data[..., tf.newaxis]
 

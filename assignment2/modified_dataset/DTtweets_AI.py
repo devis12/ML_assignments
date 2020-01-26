@@ -9,10 +9,11 @@ from sklearn.model_selection import GridSearchCV
 from sklearn import metrics
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import HashingVectorizer
-from sklearn.model_selection import KFold, cross_val_score
+from sklearn.model_selection import KFold, cross_validate
 from sklearn.model_selection import learning_curve
 
 def load_data(n_feat, filename_train_data, filename_train_targets, filename_test_data, filename_test_targets):
+    vectorizer = HashingVectorizer(n_features=n_feat)
 
     #loading training data
     raw_train_data = (pd.read_csv(filename_train_data, header=None)).to_numpy()
@@ -23,10 +24,11 @@ def load_data(n_feat, filename_train_data, filename_train_targets, filename_test
         exit
 
 
-    #raw_train_data = substituteEmptyTweetText(raw_train_data)
+    raw_train_data = substituteEmptyTweetText(raw_train_data)
     #process training data
     # learn new vocabulary from the training data & fit all the tweets into an occurencies matrix
-    train_data = getRetweetFavs(raw_train_data)
+    train_data = (vectorizer.fit_transform(raw_train_data[:,0])).toarray() 
+    train_data = addRetweetFavs(train_data, raw_train_data)
     train_data = std_matrix_by_feature(train_data)
 
 
@@ -42,9 +44,9 @@ def load_data(n_feat, filename_train_data, filename_train_targets, filename_test
         exit
 
     #process testing data (same processing as for the training data... just applied to the testing data)
-    #raw_test_data = substituteEmptyTweetText(raw_test_data)
-    #test_data = (vectorizer.transform(raw_test_data[:,0])).toarray()
-    test_data = getRetweetFavs(raw_test_data)
+    raw_test_data = substituteEmptyTweetText(raw_test_data)
+    test_data = (vectorizer.transform(raw_test_data[:,0])).toarray()
+    test_data = addRetweetFavs(test_data, raw_test_data)
     test_data = std_matrix_by_feature(test_data)
     test_targets = process_label(raw_test_targets)
 
@@ -76,7 +78,7 @@ def substituteEmptyTweetText(raw_data):
     
     return raw_data
 
-def getRetweetFavs(raw_data):
+def addRetweetFavs(data, raw_data):
     retweets = []
     for rtw in raw_data[:,2]:
         if(np.isnan(rtw)):
@@ -91,19 +93,18 @@ def getRetweetFavs(raw_data):
         else:
             favs.append([int(fav)])
 
-    retweets = np.array(retweets)
-    favs = np.array(favs)
-
-    result = np.append(retweets, favs, axis=1)
-    return result
+    data = np.append(data, np.array(retweets), axis=1)
+    data = np.append(data, np.array(favs), axis=1)
+    return data
 
 def std_matrix_by_feature(data):
     for i in range(0,data.shape[1]):
         data[:,i] = (data[:,i] - data[:,i].mean())/data[:,i].std()
     return data
 
-#object in sklearn useful to vectorize an array of strings into a matrix of occurencies for the words within the given strings
 n_features_possibilities = [2**6, 2**7, 2**8]
+C_possibilities = [1e0, 1e1, 1e2, 1e3]
+gamma_possibilities = [1e-1, 1e-2, 1e-3]
 
 accuracy_scores = []
 precision_scores = []
@@ -112,72 +113,66 @@ f1_scores = []
 
 #best_selected_params
 best_params = {
-    'C': 10,
-    'gamma': 0.01,
-    'n_features': 2**8
+    'C': None,
+    'gamma': None,
+    'n_features': None
+}
+
+#scoring values
+scoring = {
+    'accuracy_score' : 'accuracy',
+    'recall_score' : 'recall',
+    'precision_score' : 'precision',
+    'f1_score': 'f1'  
 }
 
 best_accuracy = 0
 
 kf = KFold(n_splits=3, shuffle=True, random_state=42)
 
-"""
 # Do model selection over all the possible values of n_features_possibilities 
 for n_feat in n_features_possibilities:
-    print("\nK-FOLD\nn_features for HashingVectorizer = ", n_feat)
     train_data, train_targets, test_data, test_targets = load_data(n_feat,"tweets-train-data.csv","tweets-train-targets.csv","tweets-test-data.csv","tweets-test-targets.csv")
     
-    possible_parameters = {
-        'C': [1e0, 1e1, 1e2, 1e3],
-        'gamma': [1e-1, 1e-2, 1e-3]
-    }
+    for sel_C in C_possibilities:
+        for sel_gamma in gamma_possibilities:
+            
+            print(("\nK-FOLD\nn_features for HashingVectorizer = {0}, C = {1}, gamma = {2}").format(n_feat, sel_C, sel_gamma))
 
-    svc = SVC(kernel='rbf')
-    clf = GridSearchCV(svc, possible_parameters, n_jobs=4, cv=3) # n_jobs=4 means we parallelize the search over 4 threads
-    clf.fit(train_data, train_targets)
-    
-    best_C = clf.best_params_['C']
-    best_gamma = clf.best_params_['gamma']
-    
-    # Train a classifier with current gamma
-    clf = SVC(C=best_C, kernel='rbf', gamma=best_gamma)
+            # Train a classifier with current gamma
+            clf = SVC(C=sel_C, kernel='rbf', gamma=sel_gamma)
 
-    # Compute cross-validated accuracy scores
-    acc_scores = cross_val_score(clf, train_data, train_targets, cv=kf.split(train_data), scoring='accuracy')
-    # Compute the mean accuracy and keep track of it
-    accuracy_score = acc_scores.mean()
-    accuracy_scores.append(accuracy_score)
+            # Compute cross-validated scores
+            scores = cross_validate(clf, train_data, train_targets, cv=kf.split(train_data), scoring=scoring)            
 
-    # Compute cross-validated precision scores
-    pr_scores = cross_val_score(clf, train_data, train_targets, cv=kf.split(train_data), scoring='precision')
-    # Compute the mean precision and keep track of it
-    precision_score = pr_scores.mean()
-    precision_scores.append(precision_score)
+            # Compute the mean accuracy and keep track of it
+            accuracy_score = scores['test_accuracy_score'].mean()
+            accuracy_scores.append(accuracy_score)
 
-    # Compute cross-validated recall scores
-    rec_scores = cross_val_score(clf, train_data, train_targets, cv=kf.split(train_data), scoring='recall')
-    # Compute the mean recall and keep track of it
-    recall_score = rec_scores.mean()
-    recall_scores.append(recall_score)
+            # Compute the mean precision and keep track of it
+            precision_score = scores['test_precision_score'].mean()
+            precision_scores.append(precision_score)
 
-    # Compute cross-validated f1 scores
-    f1_scores_temp = cross_val_score(clf, train_data, train_targets, cv=kf.split(train_data), scoring='f1')
-    # Compute the mean recall and keep track of it
-    f1_score = f1_scores_temp.mean()
-    f1_scores.append(f1_score)
+            # Compute the mean recall and keep track of it
+            recall_score = scores['test_recall_score'].mean()
+            recall_scores.append(recall_score)
 
-    print(("Results for n_features = {0} K-FOLD cross validation (using C = {1}, gamma = {2})".format(n_feat, best_C, best_gamma)))
-    print("Accuracy = ", accuracy_score)
-    print("Precision = ", precision_score)
-    print("Recall = ", recall_score)
-    print("F1 = ", f1_score)
+            # Compute the mean recall and keep track of it
+            f1_score = scores['test_f1_score'].mean()
+            f1_scores.append(f1_score)
 
-    if(accuracy_score > best_accuracy):
-        best_accuracy = accuracy_score
-        best_params['C'] = best_C
-        best_params['gamma'] = best_gamma
-        best_params['n_features'] = n_feat
-"""
+            print(("Results for n_features = {0} K-FOLD cross validation (using C = {1}, gamma = {2})".format(n_feat, sel_C, sel_gamma)))
+            print("Accuracy = ", accuracy_score)
+            print("Precision = ", precision_score)
+            print("Recall = ", recall_score)
+            print("F1 = ", f1_score)
+
+            if(accuracy_score > best_accuracy):
+                best_accuracy = accuracy_score
+                best_params['C'] = sel_C
+                best_params['gamma'] = sel_gamma
+                best_params['n_features'] = n_feat
+
     
 # Get the gamma with highest mean accuracy
 

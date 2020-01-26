@@ -1,0 +1,6 @@
+As it'll be discussed in the report, 
+some very little modifications have been made in the dataset for what regards the format, not the nature of data.
+
+Please contact me if you're not okay with them, 
+I have another solution which is simpler and less interesting
+(that's why I'm sending you this) which uses the original one. 

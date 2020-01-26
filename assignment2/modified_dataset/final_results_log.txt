@@ -1,0 +1,301 @@
+K-FOLD
+n_features for HashingVectorizer = 64, C = 1.0, gamma = 0.1
+Results for n_features = 64 K-FOLD cross validation (using C = 1.0, gamma = 0.1)
+Accuracy =  0.5878336436995655
+Precision =  0.9574351404576488
+Recall =  0.1803027513129729
+F1 =  0.3029141300688816
+
+K-FOLD
+n_features for HashingVectorizer = 64, C = 1.0, gamma = 0.01
+Results for n_features = 64 K-FOLD cross validation (using C = 1.0, gamma = 0.01)
+Accuracy =  0.8175046554934823
+Precision =  0.8408434448559884
+Recall =  0.781457048508091
+F1 =  0.8098797255389245
+
+K-FOLD
+n_features for HashingVectorizer = 64, C = 1.0, gamma = 0.001
+Results for n_features = 64 K-FOLD cross validation (using C = 1.0, gamma = 0.001)
+Accuracy =  0.7796399751707014
+Precision =  0.8060498218265163
+Recall =  0.734185476509832
+F1 =  0.7683410253239827
+
+K-FOLD
+n_features for HashingVectorizer = 64, C = 10.0, gamma = 0.1
+Results for n_features = 64 K-FOLD cross validation (using C = 10.0, gamma = 0.1)
+Accuracy =  0.600662114628595
+Precision =  0.9483506606419064
+Recall =  0.2094394744792251
+F1 =  0.34249296345854846
+
+K-FOLD
+n_features for HashingVectorizer = 64, C = 10.0, gamma = 0.01
+Results for n_features = 64 K-FOLD cross validation (using C = 10.0, gamma = 0.01)
+Accuracy =  0.8086074901717359
+Precision =  0.8167900096816524
+Recall =  0.793780375189414
+F1 =  0.8050169260235519
+
+K-FOLD
+n_features for HashingVectorizer = 64, C = 10.0, gamma = 0.001
+Results for n_features = 64 K-FOLD cross validation (using C = 10.0, gamma = 0.001)
+Accuracy =  0.8102627767432237
+Precision =  0.8346444556705359
+Recall =  0.7720044257960184
+F1 =  0.8019009940541268
+
+K-FOLD
+n_features for HashingVectorizer = 64, C = 100.0, gamma = 0.1
+Results for n_features = 64 K-FOLD cross validation (using C = 100.0, gamma = 0.1)
+Accuracy =  0.6010759362714669
+Precision =  0.9470629554244624
+Recall =  0.21068666581403547
+F1 =  0.3440528556027341
+
+K-FOLD
+n_features for HashingVectorizer = 64, C = 100.0, gamma = 0.01
+Results for n_features = 64 K-FOLD cross validation (using C = 100.0, gamma = 0.01)
+Accuracy =  0.7992965032071178
+Precision =  0.8055762855837024
+Recall =  0.7871529806264927
+F1 =  0.7961360534949516
+
+K-FOLD
+n_features for HashingVectorizer = 64, C = 100.0, gamma = 0.001
+Results for n_features = 64 K-FOLD cross validation (using C = 100.0, gamma = 0.001)
+Accuracy =  0.8319884129939995
+Precision =  0.844253337592343
+Recall =  0.8126426205914837
+F1 =  0.8280139121704305
+
+K-FOLD
+n_features for HashingVectorizer = 64, C = 1000.0, gamma = 0.1
+Results for n_features = 64 K-FOLD cross validation (using C = 1000.0, gamma = 0.1)
+Accuracy =  0.6147320504862405
+Precision =  0.9402794592413236
+Recall =  0.2423792658185798
+F1 =  0.38354244579271163
+
+K-FOLD
+n_features for HashingVectorizer = 64, C = 1000.0, gamma = 0.01
+Results for n_features = 64 K-FOLD cross validation (using C = 1000.0, gamma = 0.01)
+Accuracy =  0.792054624456859
+Precision =  0.7982997689877052
+Recall =  0.7796373498889883
+F1 =  0.7886499596797131
+
+K-FOLD
+n_features for HashingVectorizer = 64, C = 1000.0, gamma = 0.001
+Results for n_features = 64 K-FOLD cross validation (using C = 1000.0, gamma = 0.001)
+Accuracy =  0.7792261535278295
+Precision =  0.7850151903098855
+Recall =  0.767260441249911
+F1 =  0.775840623018874
+
+K-FOLD
+n_features for HashingVectorizer = 128, C = 1.0, gamma = 0.1
+Results for n_features = 128 K-FOLD cross validation (using C = 1.0, gamma = 0.1)
+Accuracy =  0.5528657148768881
+Precision =  0.9577763908392711
+Recall =  0.10662995439586505
+F1 =  0.19161603064967705
+
+K-FOLD
+n_features for HashingVectorizer = 128, C = 1.0, gamma = 0.01
+Results for n_features = 128 K-FOLD cross validation (using C = 1.0, gamma = 0.01)
+Accuracy =  0.8216428719222014
+Precision =  0.8459425003837212
+Recall =  0.7848064767910582
+F1 =  0.8141085463689377
+
+K-FOLD
+n_features for HashingVectorizer = 128, C = 1.0, gamma = 0.001
+Results for n_features = 128 K-FOLD cross validation (using C = 1.0, gamma = 0.001)
+Accuracy =  0.79764121663563
+Precision =  0.8185252782103086
+Recall =  0.7627107131174212
+F1 =  0.7895215222422146
+
+K-FOLD
+n_features for HashingVectorizer = 128, C = 10.0, gamma = 0.1
+Results for n_features = 128 K-FOLD cross validation (using C = 10.0, gamma = 0.1)
+Accuracy =  0.5574177529484792
+Precision =  0.9614143053583103
+Recall =  0.11571783323457614
+F1 =  0.20641797393074815
+
+K-FOLD
+n_features for HashingVectorizer = 128, C = 10.0, gamma = 0.01
+Results for n_features = 128 K-FOLD cross validation (using C = 10.0, gamma = 0.01)
+Accuracy =  0.8206083178150217
+Precision =  0.8389918215484
+Recall =  0.7917341636759124
+F1 =  0.8144878202040049
+
+K-FOLD
+n_features for HashingVectorizer = 128, C = 10.0, gamma = 0.001
+Results for n_features = 128 K-FOLD cross validation (using C = 10.0, gamma = 0.001)
+Accuracy =  0.8181253879577902
+Precision =  0.8317891751395363
+Recall =  0.7955069986705352
+F1 =  0.8131354911653742
+
+K-FOLD
+n_features for HashingVectorizer = 128, C = 100.0, gamma = 0.1
+Results for n_features = 128 K-FOLD cross validation (using C = 100.0, gamma = 0.1)
+Accuracy =  0.5572108421270433
+Precision =  0.9613105199048303
+Recall =  0.11529777175915372
+F1 =  0.20575552683040002
+
+K-FOLD
+n_features for HashingVectorizer = 128, C = 100.0, gamma = 0.01
+Results for n_features = 128 K-FOLD cross validation (using C = 100.0, gamma = 0.01)
+Accuracy =  0.8183322987792262
+Precision =  0.8355024281874885
+Recall =  0.7909317982609879
+F1 =  0.8124154168718785
+
+K-FOLD
+n_features for HashingVectorizer = 128, C = 100.0, gamma = 0.001
+Results for n_features = 128 K-FOLD cross validation (using C = 100.0, gamma = 0.001)
+Accuracy =  0.8210221394578937
+Precision =  0.8331592098318739
+Recall =  0.8009600795668478
+F1 =  0.8166458877434711
+
+K-FOLD
+n_features for HashingVectorizer = 128, C = 1000.0, gamma = 0.1
+Results for n_features = 128 K-FOLD cross validation (using C = 1000.0, gamma = 0.1)
+Accuracy =  0.5567970204841713
+Precision =  0.9607461020151625
+Recall =  0.11451560381400887
+F1 =  0.20438572170375502
+
+K-FOLD
+n_features for HashingVectorizer = 128, C = 1000.0, gamma = 0.01
+Results for n_features = 128 K-FOLD cross validation (using C = 1000.0, gamma = 0.01)
+Accuracy =  0.8148148148148149
+Precision =  0.8320080871611987
+Recall =  0.7871082126389877
+F1 =  0.8086526464732202
+
+K-FOLD
+n_features for HashingVectorizer = 128, C = 1000.0, gamma = 0.001
+Results for n_features = 128 K-FOLD cross validation (using C = 1000.0, gamma = 0.001)
+Accuracy =  0.8096420442789157
+Precision =  0.8208445889095284
+Recall =  0.790096756190683
+F1 =  0.8051232875788256
+
+K-FOLD
+n_features for HashingVectorizer = 256, C = 1.0, gamma = 0.1
+Results for n_features = 256 K-FOLD cross validation (using C = 1.0, gamma = 0.1)
+Accuracy =  0.542933995447962
+Precision =  0.9488888888888889
+Recall =  0.0865993779670589
+F1 =  0.15857797671432347
+
+K-FOLD
+n_features for HashingVectorizer = 256, C = 1.0, gamma = 0.01
+Results for n_features = 256 K-FOLD cross validation (using C = 1.0, gamma = 0.01)
+Accuracy =  0.8059176494930685
+Precision =  0.8753266534916427
+Recall =  0.7124328758957112
+F1 =  0.7849215545683791
+
+K-FOLD
+n_features for HashingVectorizer = 256, C = 1.0, gamma = 0.001
+Results for n_features = 256 K-FOLD cross validation (using C = 1.0, gamma = 0.001)
+Accuracy =  0.8197806745292778
+Precision =  0.8343630740153473
+Recall =  0.7964623238001858
+F1 =  0.8148430337897304
+
+K-FOLD
+n_features for HashingVectorizer = 256, C = 10.0, gamma = 0.1
+Results for n_features = 256 K-FOLD cross validation (using C = 10.0, gamma = 0.1)
+Accuracy =  0.5452100144837575
+Precision =  0.951534118637314
+Recall =  0.0911589478815104
+F1 =  0.16627047841469092
+
+K-FOLD
+n_features for HashingVectorizer = 256, C = 10.0, gamma = 0.01
+Results for n_features = 256 K-FOLD cross validation (using C = 10.0, gamma = 0.01)
+Accuracy =  0.7995034140285537
+Precision =  0.8499405617966604
+Recall =  0.7259761859904804
+F1 =  0.7827063522774158
+
+K-FOLD
+n_features for HashingVectorizer = 256, C = 10.0, gamma = 0.001
+Results for n_features = 256 K-FOLD cross validation (using C = 10.0, gamma = 0.001)
+Accuracy =  0.8321953238154355
+Precision =  0.8393451752289663
+Recall =  0.8206018555104234
+F1 =  0.8296567236229778
+
+K-FOLD
+n_features for HashingVectorizer = 256, C = 100.0, gamma = 0.1
+Results for n_features = 256 K-FOLD cross validation (using C = 100.0, gamma = 0.1)
+Accuracy =  0.5452100144837575
+Precision =  0.951534118637314
+Recall =  0.0911589478815104
+F1 =  0.16627047841469092
+
+K-FOLD
+n_features for HashingVectorizer = 256, C = 100.0, gamma = 0.01
+Results for n_features = 256 K-FOLD cross validation (using C = 100.0, gamma = 0.01)
+Accuracy =  0.7978481274570659
+Precision =  0.8499597512866272
+Recall =  0.7217878564951188
+F1 =  0.780304996892187
+
+K-FOLD
+n_features for HashingVectorizer = 256, C = 100.0, gamma = 0.001
+Results for n_features = 256 K-FOLD cross validation (using C = 100.0, gamma = 0.001)
+Accuracy =  0.8224705152079453
+Precision =  0.8334383410216734
+Recall =  0.8045773174431057
+F1 =  0.8184809040652551
+
+K-FOLD
+n_features for HashingVectorizer = 256, C = 1000.0, gamma = 0.1
+Results for n_features = 256 K-FOLD cross validation (using C = 1000.0, gamma = 0.1)
+Accuracy =  0.5443823711980137
+Precision =  0.9505088407527431
+Recall =  0.08950732556637354
+F1 =  0.16346918803234176
+
+K-FOLD
+n_features for HashingVectorizer = 256, C = 1000.0, gamma = 0.01
+Results for n_features = 256 K-FOLD cross validation (using C = 1000.0, gamma = 0.01)
+Accuracy =  0.7992965032071178
+Precision =  0.8559384394490062
+Recall =  0.7184408716890524
+F1 =  0.7808288302653713
+
+K-FOLD
+n_features for HashingVectorizer = 256, C = 1000.0, gamma = 0.001
+Results for n_features = 256 K-FOLD cross validation (using C = 1000.0, gamma = 0.001)
+Accuracy =  0.8069522036002482
+Precision =  0.8158079321647645
+Recall =  0.7908738432552879
+F1 =  0.8029579009949721
+
+
+At the end of k-fold training, we select as n_features = 256 (C=10.0, gamma=0.001)
+REPORT:
+               precision    recall  f1-score   support
+
+           0       0.85      0.87      0.86       799
+           1       0.87      0.84      0.86       812
+
+    accuracy                           0.86      1611
+   macro avg       0.86      0.86      0.86      1611
+weighted avg       0.86      0.86      0.86      1611
+
+Accuracy =  0.8584729981378026
